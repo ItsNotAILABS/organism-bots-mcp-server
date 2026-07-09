@@ -1,0 +1,44 @@
+{
+  "schema": "mcp.organism_bots.server.v1",
+  "name": "NOVA Organism Bots MCP",
+  "description": "MCP-style server contract for discovering organism bots, submitting bot tasks, and importing artifacts into NOVA proof ledgers.",
+  "resources": [
+    {
+      "uri": "nova://organism-bots/registry",
+      "name": "Organism Bot Registry",
+      "path": "organism-bots.registry.json"
+    },
+    {
+      "uri": "nova://organism-bots/research",
+      "name": "Organism Bots Research Paper",
+      "path": "research/ORGANISM_BOTS_PLATFORM_RESEARCH.md"
+    }
+  ],
+  "tools": [
+    {
+      "name": "organism_bots.list",
+      "input_schema": {},
+      "output": "List registered organism bots."
+    },
+    {
+      "name": "organism_bots.submit_task",
+      "input_schema": {
+        "bot_id": "string",
+        "task": "string",
+        "target": "string",
+        "operator_scope": "string"
+      },
+      "output": "Task receipt with proof gates."
+    },
+    {
+      "name": "organism_bots.import_artifact",
+      "input_schema": {
+        "task_id": "string",
+        "artifact_url": "string",
+        "sha256": "string"
+      },
+      "output": "Artifact import manifest."
+    }
+  ],
+  "proof_gates": ["bot id exists", "operator scope recorded", "task receipt created", "artifact hash verified"]
+}
