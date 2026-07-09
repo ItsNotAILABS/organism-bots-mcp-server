@@ -1,0 +1,52 @@
+{
+  "schema": "nova.organism_bots.registry.v1",
+  "authority": "ItsNotAILABS / NOVA",
+  "truth_line": "Organism bots are role-bearing runtime organs that sense, route, act, verify, record, and hand off work.",
+  "bots": [
+    {
+      "id": "origo-builder-bot",
+      "name": "ORIGO Builder Bot",
+      "house": "Genesis / Substratum",
+      "role": "Builds repo structures, code packages, app shells, and release runs.",
+      "inputs": ["GitHub repo", "local zip", "NOVABUILD terminal", "external AI artifact"],
+      "outputs": ["branch", "pull request", "release zip", "verification report"],
+      "proof_gates": ["changed file manifest", "tests", "package hash", "handoff"]
+    },
+    {
+      "id": "transitus-connector-bot",
+      "name": "TRANSITUS Connector Bot",
+      "house": "Translatio",
+      "role": "Connects external AI tools, MCP/MTP servers, webhooks, CLIs, and artifact servers.",
+      "inputs": ["server URL", "auth mode", "tool schema", "task request"],
+      "outputs": ["connector registration", "tool discovery", "task request", "artifact import manifest"],
+      "proof_gates": ["origin", "auth boundary", "tool list", "artifact hash"]
+    },
+    {
+      "id": "sace-proof-bot",
+      "name": "SACE Proof Bot",
+      "house": "Medina / Cura",
+      "role": "Creates proof packs, benchmarks, audit chains, replay records, and release gates.",
+      "inputs": ["artifact", "test output", "benchmark result", "release target"],
+      "outputs": ["proof manifest", "benchmark report", "replay fixture", "release readiness score"],
+      "proof_gates": ["hash", "replay", "benchmark", "risk score"]
+    },
+    {
+      "id": "mercatus-launch-bot",
+      "name": "MERCATUS Launch Bot",
+      "house": "Expressio / Civitas",
+      "role": "Turns product surfaces into market-ready pages, pricing, onboarding, and safe outreach.",
+      "inputs": ["product manifest", "target customer", "pricing signal", "proof gates"],
+      "outputs": ["launch copy", "pricing map", "outreach guardrails", "onboarding flow"],
+      "proof_gates": ["claim check", "price formula", "audience fit", "compliance note"]
+    },
+    {
+      "id": "memoria-consequence-bot",
+      "name": "MEMORIA Consequence Bot",
+      "house": "Civitas / Cura",
+      "role": "Records real-world consequence and upgrades future estimates from outcomes.",
+      "inputs": ["decision", "event", "impact", "operator note"],
+      "outputs": ["consequence event", "risk score", "replay note", "lesson object"],
+      "proof_gates": ["event hash", "impact category", "lesson", "future modifier"]
+    }
+  ]
+}
