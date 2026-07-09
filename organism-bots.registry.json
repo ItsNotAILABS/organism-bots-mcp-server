@@ -1,52 +1,140 @@
 {
-  "schema": "nova.organism_bots.registry.v1",
+  "schema": "nova.organism_bots.registry.v2",
   "authority": "ItsNotAILABS / NOVA",
   "truth_line": "Organism bots are role-bearing runtime organs that sense, route, act, verify, record, and hand off work.",
+  "launch_level_model": "L0 draft, L1 registered, L2 runnable, L3 proved, L4 marketable",
   "bots": [
     {
       "id": "origo-builder-bot",
       "name": "ORIGO Builder Bot",
-      "house": "Genesis / Substratum",
+      "house": "Genesis",
+      "secondary_houses": ["Substratum"],
       "role": "Builds repo structures, code packages, app shells, and release runs.",
       "inputs": ["GitHub repo", "local zip", "NOVABUILD terminal", "external AI artifact"],
       "outputs": ["branch", "pull request", "release zip", "verification report"],
-      "proof_gates": ["changed file manifest", "tests", "package hash", "handoff"]
+      "proof_gates": ["changed file manifest", "tests", "package hash", "handoff"],
+      "launch_level": "L2"
     },
     {
       "id": "transitus-connector-bot",
       "name": "TRANSITUS Connector Bot",
       "house": "Translatio",
-      "role": "Connects external AI tools, MCP/MTP servers, webhooks, CLIs, and artifact servers.",
+      "secondary_houses": ["Substratum"],
+      "role": "Connects external AI tools, MCP/MTP servers, webhooks, CLIs, IDEs, and artifact servers.",
       "inputs": ["server URL", "auth mode", "tool schema", "task request"],
       "outputs": ["connector registration", "tool discovery", "task request", "artifact import manifest"],
-      "proof_gates": ["origin", "auth boundary", "tool list", "artifact hash"]
+      "proof_gates": ["origin", "auth boundary", "tool list", "artifact hash"],
+      "launch_level": "L2"
     },
     {
       "id": "sace-proof-bot",
       "name": "SACE Proof Bot",
-      "house": "Medina / Cura",
+      "house": "Medina",
+      "secondary_houses": ["Cura"],
       "role": "Creates proof packs, benchmarks, audit chains, replay records, and release gates.",
       "inputs": ["artifact", "test output", "benchmark result", "release target"],
       "outputs": ["proof manifest", "benchmark report", "replay fixture", "release readiness score"],
-      "proof_gates": ["hash", "replay", "benchmark", "risk score"]
+      "proof_gates": ["hash", "replay", "benchmark", "risk score"],
+      "launch_level": "L2"
     },
     {
       "id": "mercatus-launch-bot",
       "name": "MERCATUS Launch Bot",
-      "house": "Expressio / Civitas",
+      "house": "Expressio",
+      "secondary_houses": ["Civitas"],
       "role": "Turns product surfaces into market-ready pages, pricing, onboarding, and safe outreach.",
       "inputs": ["product manifest", "target customer", "pricing signal", "proof gates"],
       "outputs": ["launch copy", "pricing map", "outreach guardrails", "onboarding flow"],
-      "proof_gates": ["claim check", "price formula", "audience fit", "compliance note"]
+      "proof_gates": ["claim check", "price formula", "audience fit", "compliance note"],
+      "launch_level": "L2"
     },
     {
       "id": "memoria-consequence-bot",
       "name": "MEMORIA Consequence Bot",
-      "house": "Civitas / Cura",
+      "house": "Cura",
+      "secondary_houses": ["Civitas"],
       "role": "Records real-world consequence and upgrades future estimates from outcomes.",
       "inputs": ["decision", "event", "impact", "operator note"],
       "outputs": ["consequence event", "risk score", "replay note", "lesson object"],
-      "proof_gates": ["event hash", "impact category", "lesson", "future modifier"]
+      "proof_gates": ["event hash", "impact category", "lesson", "future modifier"],
+      "launch_level": "L1"
+    },
+    {
+      "id": "aedificium-spec-bot",
+      "name": "AEDIFICIUM Spec Bot",
+      "house": "Genesis",
+      "secondary_houses": ["Expressio"],
+      "role": "Turns click-only product choices into professional app specifications and 10-section exports.",
+      "inputs": ["project profile", "feature choices", "brand choices", "launch target"],
+      "outputs": ["app specification", "feature matrix", "handoff brief", "10-section export"],
+      "proof_gates": ["section completeness", "launch target captured", "missing decision list", "operator approval"],
+      "launch_level": "L1"
+    },
+    {
+      "id": "speculum-browser-bot",
+      "name": "SPECULUM Browser Workbench Bot",
+      "house": "Substratum",
+      "secondary_houses": ["Translatio"],
+      "role": "Coordinates browser runtime surfaces such as service workers, storage, manifests, WASM modules, and developer-console telemetry.",
+      "inputs": ["browser trace", "manifest", "service worker status", "storage report"],
+      "outputs": ["browser capability map", "workbench action plan", "runtime risk report"],
+      "proof_gates": ["origin captured", "storage boundary noted", "unsafe execution blocked", "capability evidence"],
+      "launch_level": "L1"
+    },
+    {
+      "id": "custos-ci-bot",
+      "name": "CUSTOS CI Sentinel Bot",
+      "house": "Cura",
+      "secondary_houses": ["Substratum"],
+      "role": "Maintains CI gates, validator runs, regression checks, and release readiness status.",
+      "inputs": ["branch", "pull request", "validator output", "test matrix"],
+      "outputs": ["ci plan", "failure report", "release gate", "fix recommendation"],
+      "proof_gates": ["check name", "exit code", "log summary", "risk status"],
+      "launch_level": "L1"
+    },
+    {
+      "id": "vigil-securitas-bot",
+      "name": "VIGIL Securitas Bot",
+      "house": "Cura",
+      "secondary_houses": ["Medina"],
+      "role": "Reviews permissions, auth boundaries, arbitrary execution risk, secret handling, and connector abuse surfaces.",
+      "inputs": ["tool contract", "auth mode", "execution plan", "artifact import request"],
+      "outputs": ["security finding", "permission boundary", "mitigation plan", "go/no-go recommendation"],
+      "proof_gates": ["threat class", "affected surface", "mitigation", "residual risk"],
+      "launch_level": "L1"
+    },
+    {
+      "id": "indexus-seo-bot",
+      "name": "INDEXUS SEO Bot",
+      "house": "Expressio",
+      "secondary_houses": ["Civitas"],
+      "role": "Improves repository discoverability through keyword strategy, README structure, use-case pages, badges, and GitHub topic recommendations.",
+      "inputs": ["repo README", "product category", "target user", "keyword set"],
+      "outputs": ["SEO brief", "README upgrades", "topic recommendations", "use-case index"],
+      "proof_gates": ["target query list", "title clarity", "use-case coverage", "topic list"],
+      "launch_level": "L1"
+    },
+    {
+      "id": "pretium-pricing-bot",
+      "name": "PRETIUM Pricing Advisor Bot",
+      "house": "Civitas",
+      "secondary_houses": ["Expressio"],
+      "role": "Suggests product pricing from complexity, customer value, support load, proof level, and launch tier.",
+      "inputs": ["product manifest", "customer type", "complexity score", "support level"],
+      "outputs": ["price recommendation", "tier model", "assumption list", "risk note"],
+      "proof_gates": ["formula inputs", "assumptions", "customer segment", "review required"],
+      "launch_level": "L1"
+    },
+    {
+      "id": "civitas-customer-bot",
+      "name": "CIVITAS Customer Workflow Bot",
+      "house": "Civitas",
+      "secondary_houses": ["Cura"],
+      "role": "Turns customer needs into onboarding tasks, support flows, success checklists, and feedback loops.",
+      "inputs": ["customer profile", "use case", "onboarding state", "support issue"],
+      "outputs": ["onboarding plan", "success checklist", "support triage", "feedback event"],
+      "proof_gates": ["customer context", "next step", "owner", "follow-up date"],
+      "launch_level": "L1"
     }
   ]
 }
