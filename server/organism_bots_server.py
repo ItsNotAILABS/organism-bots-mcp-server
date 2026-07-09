@@ -21,6 +21,29 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "organism-bots.registry.json"
 MCP_PATH = ROOT / "mcp" / "organism-bots.mcp.json"
 
+ROUTE_KEYWORDS = {
+    "build": "origo-builder-bot",
+    "repo": "origo-builder-bot",
+    "connect": "transitus-connector-bot",
+    "mcp": "transitus-connector-bot",
+    "proof": "sace-proof-bot",
+    "audit": "sace-proof-bot",
+    "launch": "mercatus-launch-bot",
+    "market": "mercatus-launch-bot",
+    "memory": "memoria-consequence-bot",
+    "lesson": "memoria-consequence-bot",
+    "spec": "aedificium-spec-bot",
+    "browser": "speculum-browser-bot",
+    "service worker": "speculum-browser-bot",
+    "ci": "custos-ci-bot",
+    "test": "custos-ci-bot",
+    "security": "vigil-securitas-bot",
+    "auth": "vigil-securitas-bot",
+    "seo": "indexus-seo-bot",
+    "pricing": "pretium-pricing-bot",
+    "customer": "civitas-customer-bot",
+}
+
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -48,6 +71,52 @@ class OrganismState:
             "time": utc_now(),
             "bot_count": len(self.bots),
             "tool_count": len(self.manifest.get("tools", [])),
+        }
+
+    def describe_bot(self, bot_id: str) -> tuple[int, dict[str, Any]]:
+        bot = self.bots.get(bot_id)
+        if not bot:
+            return 404, {"status": "not_found", "known_bots": sorted(self.bots)}
+        return 200, {"status": "ok", "bot": bot}
+
+    def route_plan(self, request: dict[str, Any]) -> tuple[int, dict[str, Any]]:
+        task = str(request.get("task", "")).lower()
+        target_surface = str(request.get("target_surface", "")).lower()
+        haystack = f"{task} {target_surface}"
+        bot_id = "origo-builder-bot"
+        for keyword, candidate in ROUTE_KEYWORDS.items():
+            if keyword in haystack:
+                bot_id = candidate
+                break
+        bot = self.bots[bot_id]
+        return 200, {
+            "schema": "nova.organism.route_plan.v1",
+            "status": "planned",
+            "selected_bot_id": bot_id,
+            "selected_bot_name": bot.get("name"),
+            "house": bot.get("house"),
+            "risk_level": request.get("risk_level", "unknown"),
+            "proof_gates": bot.get("proof_gates", []),
+            "next_handoff": "submit_task_after_operator_scope_is_confirmed",
+        }
+
+    def readiness_report(self, request: dict[str, Any]) -> tuple[int, dict[str, Any]]:
+        bot_id = request.get("bot_id")
+        target_level = request.get("target_level", "L3")
+        if bot_id not in self.bots:
+            return 404, {"status": "rejected", "reason": "unknown_bot_id", "known_bots": sorted(self.bots)}
+        bot = self.bots[bot_id]
+        gaps = ["persistent receipt storage", "replay fixture", "CI validation"]
+        if target_level == "L4":
+            gaps.extend(["operator dashboard", "support path", "market proof page"])
+        return 200, {
+            "schema": "nova.organism.readiness_report.v1",
+            "status": "needs_work" if gaps else "ready",
+            "bot_id": bot_id,
+            "current_level": bot.get("launch_level", "L0"),
+            "target_level": target_level,
+            "required_gaps": gaps,
+            "proof_gates": bot.get("proof_gates", []),
         }
 
     def create_task_receipt(self, task: dict[str, Any]) -> tuple[int, dict[str, Any]]:
@@ -116,21 +185,30 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(200, self.state.registry)
         elif path == "/tools":
             self.send_json(200, {"tools": self.state.manifest.get("tools", [])})
+        elif path.startswith("/bots/"):
+            bot_id = path.removeprefix("/bots/").strip("/")
+            status, payload = self.state.describe_bot(bot_id)
+            self.send_json(status, payload)
         else:
-            self.send_json(404, {"status": "not_found", "paths": ["/health", "/registry", "/tools", "/tasks"]})
+            self.send_json(404, {"status": "not_found", "paths": ["/health", "/registry", "/tools", "/bots/{bot_id}", "/tasks", "/route", "/readiness"]})
 
     def do_POST(self) -> None:  # noqa: N802 - stdlib API name
         path = urlparse(self.path).path
-        if path != "/tasks":
-            self.send_json(404, {"status": "not_found", "paths": ["/tasks"]})
-            return
         try:
-            task = self.read_json_body()
+            body = self.read_json_body()
         except json.JSONDecodeError as exc:
             self.send_json(400, {"status": "rejected", "reason": "invalid_json", "detail": str(exc)})
             return
-        status, receipt = self.state.create_task_receipt(task)
-        self.send_json(status, receipt)
+
+        if path == "/tasks":
+            status, payload = self.state.create_task_receipt(body)
+        elif path == "/route":
+            status, payload = self.state.route_plan(body)
+        elif path == "/readiness":
+            status, payload = self.state.readiness_report(body)
+        else:
+            status, payload = 404, {"status": "not_found", "paths": ["/tasks", "/route", "/readiness"]}
+        self.send_json(status, payload)
 
 
 def main() -> None:
@@ -142,7 +220,7 @@ def main() -> None:
     Handler.state = OrganismState()
     server = ThreadingHTTPServer((args.host, args.port), Handler)
     print(f"NOVA Organism Bots MCP server listening on http://{args.host}:{args.port}")
-    print("Available paths: /health, /registry, /tools, POST /tasks")
+    print("Available paths: /health, /registry, /tools, /bots/{bot_id}, POST /tasks, POST /route, POST /readiness")
     server.serve_forever()
 
 
