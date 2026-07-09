@@ -1,7 +1,7 @@
 {
-  "schema": "mcp.organism_bots.server.v1",
+  "schema": "mcp.organism_bots.server.v2",
   "name": "NOVA Organism Bots MCP",
-  "description": "MCP-style server contract for discovering organism bots, submitting bot tasks, and importing artifacts into NOVA proof ledgers.",
+  "description": "MCP-style server contract for discovering organism bots, submitting bot tasks, importing artifacts, producing readiness reports, and routing business-building work through governed bot organs.",
   "resources": [
     {
       "uri": "nova://organism-bots/registry",
@@ -12,6 +12,11 @@
       "uri": "nova://organism-bots/research",
       "name": "Organism Bots Research Paper",
       "path": "research/ORGANISM_BOTS_PLATFORM_RESEARCH.md"
+    },
+    {
+      "uri": "nova://organism-bots/readiness",
+      "name": "Product Readiness Guide",
+      "path": "docs/PRODUCT_READINESS.md"
     }
   ],
   "tools": [
@@ -19,6 +24,13 @@
       "name": "organism_bots.list",
       "input_schema": {},
       "output": "List registered organism bots."
+    },
+    {
+      "name": "organism_bots.describe",
+      "input_schema": {
+        "bot_id": "string"
+      },
+      "output": "Return bot role, houses, inputs, outputs, proof gates, and launch level."
     },
     {
       "name": "organism_bots.submit_task",
@@ -31,6 +43,15 @@
       "output": "Task receipt with proof gates."
     },
     {
+      "name": "organism_bots.route_plan",
+      "input_schema": {
+        "task": "string",
+        "target_surface": "string",
+        "risk_level": "string"
+      },
+      "output": "Suggested bot route with required proof gates and next handoff."
+    },
+    {
       "name": "organism_bots.import_artifact",
       "input_schema": {
         "task_id": "string",
@@ -38,7 +59,15 @@
         "sha256": "string"
       },
       "output": "Artifact import manifest."
+    },
+    {
+      "name": "organism_bots.readiness_report",
+      "input_schema": {
+        "bot_id": "string",
+        "target_level": "string"
+      },
+      "output": "Launch readiness report with gaps and promotion gates."
     }
   ],
-  "proof_gates": ["bot id exists", "operator scope recorded", "task receipt created", "artifact hash verified"]
+  "proof_gates": ["bot id exists", "operator scope recorded", "task receipt created", "artifact hash verified", "launch level declared"]
 }
