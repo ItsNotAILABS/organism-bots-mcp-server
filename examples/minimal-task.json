@@ -1,0 +1,6 @@
+{
+  "bot_id": "transitus-connector-bot",
+  "task": "Register the Caffeine MTP server as an external AI worker surface and return a connector plan.",
+  "target": "caffeine-mtp",
+  "operator_scope": "dry-run"
+}
