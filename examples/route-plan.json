@@ -1,0 +1,5 @@
+{
+  "task": "Create a launch-ready product spec, README upgrades, and pricing advisor for a cloned app marketplace item.",
+  "target_surface": "nova-build-dashboard",
+  "risk_level": "medium"
+}
