@@ -1,0 +1,27 @@
+{
+  "schema": "nexus.capability.v1",
+  "component": "organism-bots-mcp-server",
+  "repository": "ItsNotAILABS/organism-bots-mcp-server",
+  "role": "governed-workflow-organism-plane",
+  "actions": [
+    "organism.list",
+    "organism.describe",
+    "organism.route_plan",
+    "organism.submit_task",
+    "organism.readiness_report",
+    "organism.import_artifact"
+  ],
+  "risk_tiers": {
+    "organism.list": "read",
+    "organism.describe": "read",
+    "organism.route_plan": "plan",
+    "organism.submit_task": "governed",
+    "organism.readiness_report": "read",
+    "organism.import_artifact": "write-bounded"
+  },
+  "produces": ["nexus.task.v1","nexus.policy-decision.v1","nexus.execution-receipt.v1","nexus.handoff.v1"],
+  "consumes": ["nexus.capability.v1","nexus.budget.v1","nexus.context-pack.v1","nexus.artifact.v1"],
+  "limits": {"arbitrary_external_execution": false, "implicit_completion_claims": false, "private_reasoning_export": false},
+  "proof": {"state": "source", "authority": "bot registry, route plans and task receipts"},
+  "authority": "ItsNotAILABS/nexus"
+}
