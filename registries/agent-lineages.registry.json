@@ -1,0 +1,18 @@
+{
+  "schema": "nova.organism_agent_lineages.v1",
+  "authority": "ItsNotAILABS / NOVA",
+  "status": "release-candidate",
+  "lineages": [
+    {"id":"mortal","primary_property":"bounded-lifecycle","launch_level":"L2"},
+    {"id":"phantasma","primary_property":"ephemeral-execution","launch_level":"L1"},
+    {"id":"undead","primary_property":"cross-termination-identity","launch_level":"L1"},
+    {"id":"ghost","primary_property":"dormant-persistence","launch_level":"L1"},
+    {"id":"lich","primary_property":"external-identity-anchor","launch_level":"L0"},
+    {"id":"zombie","primary_property":"degraded-survival","launch_level":"L0"},
+    {"id":"phoenix","primary_property":"controlled-reconstitution","launch_level":"L0"},
+    {"id":"swarm-undead","primary_property":"distributed-continuity","launch_level":"L0"},
+    {"id":"cyborg","primary_property":"human-machine-hybrid","launch_level":"L1"},
+    {"id":"ninja","primary_property":"browser-research-phenotype","launch_level":"L1"},
+    {"id":"droid","primary_property":"embodied-device-agent","launch_level":"L0"}
+  ]
+}
